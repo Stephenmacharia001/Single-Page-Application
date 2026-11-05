@@ -1,0 +1,61 @@
+/* Custom Global Variables Setup */
+:root {
+    --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    --card-bg: #ffffff;
+    --text-color: #212529;
+}
+
+/* Dark Mode Variable Overrides */
+[data-theme="dark"] {
+    --bg-gradient: linear-gradient(135deg, #1e1e2f 0%, #11111b 100%);
+    --card-bg: #1e1e2e;
+    --text-color: #cdd6f4;
+}
+
+/* Document Base Styles */
+body {
+    background: var(--bg-gradient);
+    color: var(--text-color);
+    min-height: 100vh;
+    transition: background 0.3s ease, color 0.3s ease; 
+}
+
+/* Container Card Layouts */
+.app-card {
+    background-color: var(--card-bg);
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08); 
+    transition: transform 0.2s ease, background-color 0.3s ease;
+}
+
+/* Synonym Token Component Badges */
+.badge-synonym {
+    background-color: #e8f0fe;
+    color: #1a73e8;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.badge-synonym:hover {
+    background-color: #1a73ed;
+    color: #ffffff;
+}
+
+/* Interactive Favorites Button Adjustments */
+.favorite-btn {
+    transition: transform 0.2s ease; 
+}
+
+.favorite-btn:hover {
+    transform: scale(1.1);
+}
+
+/* Saved Term Badge Items */
+.saved-word-item {
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.saved-word-item:hover { 
+    background-color: rgba(26, 115, 232, 0.1);
+}
