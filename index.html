@@ -3,52 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wordly - Interactive SPA Dictionary</title>
-    <!-- FIX: Official, fully qualified Bootstrap 5 CDN url path -->
+    <title>Wordly Dictionary</title>
+    <!-- FIXED: Fully qualified, correct Bootstrap  link to prevent connection timeouts -->
     <link href="https://jsdelivr.net" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div class="container py-5" style="max-width: 800px;">
+    <!-- Target alignment frame layer -->
+    <div class="app-container">
+        
         <!-- Header and theme switcher -->
-        <header class="d-flex justify-content-between align-items-center mb-4">
+        <header class="d-flex justify-content-between align-items-center mb-2">
             <div>
-                <h1 class="fw-bold text-primary m-0">Wordly</h1>
-                <p class="text-muted small">An interactive dictionary application</p>
+                <h1 class="m-0">Wordly</h1>
+                <p class="subtitle">An interactive dictionary application</p>
             </div>
-            <button id="themeToggle" class="btn btn-outline-secondary btn-sm" aria-label="Toggle dark and light mode">
+            <button id="themeToggle" aria-label="Toggle dark and light mode">
+                <!-- Emojis inside custom CSS button rules serve as visual anchors -->
                 🌓 Dark & Light Theme
             </button>
         </header>
 
-        <!-- Search form -->
-        <section class="app-card p-4 mb-4">
-            <form id="searchForm" class="row g-2" novalidate>
-                <div class="col-sm-9">
-                    <input type="text" id="searchInput" class="form-control form-control-lg" 
+        <!-- Search form panel -->
+        <section class="card-panel">
+            <form id="searchForm" novalidate>
+                <div class="flex-grow-1">
+                    <input type="text" id="searchInput" class="w-100" 
                            placeholder="Type a word to learn..." aria-label="Dictionary search input" required autocomplete="off">
-                    <div class="invalid-feedback">Please enter a valid word to search.</div>
+                    <div class="invalid-feedback validation-message d-none">Please enter a valid word to search.</div>
                 </div>
-                <div class="col-sm-3 d-grid">
-                    <button type="submit" class="btn btn-primary btn-lg fw-semibold" aria-label="Search button">
-                        Search
-                    </button>
-                </div>
+                <button type="submit">Search</button>
             </form>
         </section>
 
         <!-- Favorites / Saved words -->
-        <section id="favoritesWrapper" class="app-card p-3 mb-4 d-none">
-            <h5 class="fw-bold text-secondary mb-2 small text-uppercase tracking-wider">Saved Vocabulary</h5>
-            <div id="favoritesList" class="d-flex flex-wrap gap-2">
+        <section id="favoritesWrapper" class="card-panel d-none">
+            <h3>Saved Vocabulary</h3>
+            <div id="favoritesList">
                 <!-- Saved items will appear here dynamically via JavaScript -->
             </div>
         </section>
 
-        <!-- Feedback and response display -->
-        <main id="resultContainer">
-            <div class="text-center text-muted p-5 app-card">
+        <!-- Feedback and response display node -->
+        <main id="resultContainer" class="card-panel">
+            <div class="text-center text-muted py-4">
                 <p class="m-0 fs-5">Enter a word here to search</p>
             </div>
         </main>
@@ -56,16 +55,15 @@
 
     <!-- UI component templates -->
     <template id="template-loading">
-        <div class="text-center p-5 app-card">
-            <div class="spinner-border text-primary" role="status">
-                <span class="visually-hidden">Loading definitions...</span>
-            </div>
+        <div class="text-center py-4">
+            <!-- Uses the optimized custom keyframe spinning element from the CSS -->
+            <div class="spinner-loader" role="status"></div>
             <p class="mt-3 text-muted mb-0">Consulting Wordly Language Tools...</p>
         </div>
     </template>
 
     <template id="template-error">
-        <div class="alert alert-danger p-4 app-card border-0 d-flex align-items-center" role="alert">
+        <div class="alert alert-danger p-4 border-0 d-flex align-items-center" role="alert" style="border-radius: var(--radius-lg);">
             <div class="fs-3 me-3">⚠️</div>
             <div>
                 <h5 class="alert-heading fw-bold mb-1">Word Not Found</h5>
@@ -75,26 +73,29 @@
     </template>
 
     <template id="template-word-result">
-        <article class="app-card p-4">
-            <div class="d-flex justify-content-between align-items-start border-bottom pb-3 mb-3">
+        <div>
+            <!-- Custom operational result bindings mapping -->
+            <div class="word-result-header">
                 <div>
-                    <h2 id="res-word" class="fw-bold text-capitalize d-inline-block me-2 mb-1"></h2>
-                    <span id="res-phonetic" class="text-muted fst-italic fs-5 d-block d-sm-inline"></span>
+                    <h2 id="res-word" class="m-0"></h2>
+                    <span id="res-phonetic" class="phonetic-text"></span>
                 </div>
-                <div class="d-flex gap-2">
-                    <button id="audioBtn" class="btn btn-outline-primary rounded-circle p-2 d-none" style="width: 44px; height: 44px;" aria-label="Play pronunciation audio">
+                <div class="action-buttons-group">
+                    <button id="audioBtn" class="btn-icon d-none" aria-label="Play pronunciation audio">
                         🔊
                     </button>
-                    <button id="favBtn" class="btn btn-outline-warning rounded-circle p-2 favorite-btn" style="width: 44px; height: 44px;" aria-label="Save word to favorites">
+                    <button id="favBtn" class="btn-icon btn-outline-warning" aria-label="Save word to favorites">
                         ⭐
                     </button>
                 </div>
             </div>
+            
             <div id="meaningsContainer"></div>
-            <div class="mt-4 pt-3 border-top text-muted small">
-                Source Details: <a id="res-source" href="#" target="_blank" class="text-decoration-none text-primary"></a>
+            
+            <div class="source-attribution">
+                Source Details: <a id="res-source" href="#" target="_blank"></a>
             </div>
-        </article>
+        </div>
     </template>
 
     <!-- Core application logic link -->

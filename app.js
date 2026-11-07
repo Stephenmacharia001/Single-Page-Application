@@ -174,7 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Source Hyperlink Reference Context
         const sourceElement = clone.getElementById('res-source');
-        // FIXED: Replaced unescaped template string error variable syntax
+        
         const sourceUrl = data.sourceUrls?.[0] || `https://wiktionary.org{data.word}`;
         sourceElement.href = sourceUrl;
         sourceElement.textContent = new URL(sourceUrl).hostname;
